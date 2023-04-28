@@ -1,7 +1,7 @@
 import { CORS } from './constants/cors';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import morgan from 'morgan';
+import * as morgan from 'morgan';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -15,5 +15,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api'); // Global prefix. Now everything will be localhost:8000/api instead of localhost:8000
   await app.listen(configService.get('PORT'));
+
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
