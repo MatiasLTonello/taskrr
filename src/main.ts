@@ -1,21 +1,22 @@
-import { CORS } from './constants/cors';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import * as morgan from 'morgan';
 import { AppModule } from './app.module';
+import * as morgan from 'morgan';
+import { CORS } from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const configService = app.get(ConfigService); // Obtain the port
+  app.use(morgan('dev'));
 
-  app.enableCors(CORS); // Enable cors (Cross-Origin Resource Sharing
+  const configService = app.get(ConfigService);
 
-  app.use(morgan('dev')); // Logs de dev
+  app.enableCors(CORS);
 
-  app.setGlobalPrefix('api'); // Global prefix. Now everything will be localhost:8000/api instead of localhost:8000
+  app.setGlobalPrefix('api');
+
   await app.listen(configService.get('PORT'));
-
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  
+  console.log(`Application running on: ${await app.getUrl()}`)
 }
 bootstrap();
