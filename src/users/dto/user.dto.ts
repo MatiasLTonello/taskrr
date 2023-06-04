@@ -1,32 +1,68 @@
-import { isNotEmpty, isString, isNumber, IsEnum } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsOptional,
+} from 'class-validator';
 import { ROLES } from 'src/constants/roles';
 
 export class UserDTO {
-@isNotEmpty()
-@isString()
+  @IsNotEmpty()
+  @IsString()
   firstName: string;
 
-  @isNotEmpty()
-  @isString()
+  @IsNotEmpty()
+  @IsString()
   lastName: string;
 
-  @isNotEmpty()
-  @isNumber()
+  @IsNotEmpty()
+  @IsNumber()
   age: number;
 
-  @isNotEmpty()
-  @isString()
+  @IsNotEmpty()
+  @IsString()
   email: string;
 
-  @isNotEmpty()
-  @isString()
+  @IsNotEmpty()
+  @IsString()
   username: string;
 
-  @isNotEmpty()
-  @isString()
+  @IsNotEmpty()
+  @IsString()
   password: string;
 
-  @isNotEmpty()
+  @IsNotEmpty()
+  @IsEnum(ROLES)
+  role: ROLES;
+}
+
+export class UserUpdateDTO {
+  @IsOptional()
+  @IsString()
+  firstName: string;
+
+  @IsOptional()
+  @IsString()
+  lastName: string;
+
+  @IsOptional()
+  @IsNumber()
+  age: number;
+
+  @IsOptional()
+  @IsString()
+  email: string;
+
+  @IsOptional()
+  @IsString()
+  username: string;
+
+  @IsOptional()
+  @IsString()
+  password: string;
+
+  @IsOptional()
   @IsEnum(ROLES)
   role: ROLES;
 }
