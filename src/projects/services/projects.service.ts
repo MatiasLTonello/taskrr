@@ -4,12 +4,14 @@ import { ErrorManager } from 'src/utils/error.manager';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ProjectDTO, ProjectUpdateDTO } from '../dto/projects.dto';
 import { ProjectsEntity } from '../entities/projects.entity';
+import { HttpCustomService } from 'src/providers/http/http.service';
 
 @Injectable()
 export class ProjectsService {
   constructor(
     @InjectRepository(ProjectsEntity)
     private readonly projectRepository: Repository<ProjectsEntity>,
+    private readonly httpService: HttpCustomService
   ) {}
 
   public async createProject(body: ProjectDTO): Promise<ProjectsEntity> {
@@ -33,6 +35,10 @@ export class ProjectsService {
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
+  }
+
+  public async listApi(){
+    return this.httpService.apiFindAll()
   }
 
   public async findProjectById(id: string): Promise<ProjectsEntity> {

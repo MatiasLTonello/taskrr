@@ -15,6 +15,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { AccessLevelGuard } from 'src/auth/guards/access-level.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AccessLevel } from 'src/auth/decorators/acess-level.decorator';
+import { PublicAccess } from 'src/auth/decorators/public.decorator';
 
 @Controller('projects')
 @UseGuards(AuthGuard, AccessLevelGuard, RolesGuard)
@@ -29,6 +30,14 @@ export class ProjectsController {
   public async findAllProjects() {
     return await this.projectService.findProjects();
   }
+
+  @PublicAccess()
+  @Get('list/api')
+  public async listApi(){
+    return this.projectService.listApi();
+  }
+
+
 
   @Get(':projectId')
   public async findProjectById(@Param('projectId', new ParseUUIDPipe()) id: string) {
